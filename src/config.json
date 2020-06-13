@@ -1,0 +1,39 @@
+{
+    "_comments": {
+        "selfplay_params": "is general parameters epsilon denoted to noise introduced set exploration to True for running Exploration at later stages, update step denotes when updates happening",
+        "exploration_params": "is exploration related params, thetas denote the increment factor and additive denotes whether it is linear or exponential increment"
+    },
+    "selfplay_params": {
+        "epsilon_1": 0.001,
+        "epsilon_2": 0.0001,
+        "epsilon_3": 0.0001,
+        "updatable": "False",
+        "update_step": 4,
+        "exploration": "True",
+        "prioratize_failed": "False"
+    },
+    "exploration_params": {
+        "additive": "True",
+        "theta_1": 2,
+        "theta_2": 2,
+        "theta_3": 2
+    },
+    "reward_based_params": {
+        "alpha": [
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6,
+            0.7
+        ],
+        "beta": [
+            0.1,
+            0.5,
+            1,
+            2,
+            3
+        ]
+    }
+}
