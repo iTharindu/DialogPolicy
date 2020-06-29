@@ -7,10 +7,11 @@
         "epsilon_1": 0.001,
         "epsilon_2": 0.0001,
         "epsilon_3": 0.0001,
-        "updatable": "False",
+        "updatable": "True",
         "update_step": 4,
-        "exploration": "True",
-        "prioratize_failed": "False"
+        "exploration": "False",
+        "prioratize_failed": "True",
+        "update_start": 60
     },
     "exploration_params": {
         "additive": "True",
@@ -20,20 +21,19 @@
     },
     "reward_based_params": {
         "alpha": [
+            0.05,
             0.1,
             0.2,
             0.3,
-            0.4,
             0.5,
-            0.6,
-            0.7
+            1
         ],
         "beta": [
             0.1,
             0.5,
             1,
-            2,
-            3
-        ]
+            2
+        ],
+        "method": "naive"
     }
 }

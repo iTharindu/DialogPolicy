@@ -61,6 +61,8 @@ class RuleSimulator(UserSimulator):
 
         #self.goal =  random.choice(self.start_set)
         self.goal = self._sample_goal()
+        self.goal_original = copy.deepcopy(self.goal)
+
         self.goal['request_slots']['ticket'] = 'UNK'
         self.constraint_check = dialog_config.CONSTRAINT_CHECK_FAILURE
 
@@ -128,6 +130,9 @@ class RuleSimulator(UserSimulator):
         else:
             sample_goal = self.selfplay.sample_random_goal()
         return sample_goal
+
+    def get_goal(self):
+        return self.goal_original
 
     def corrupt(self, user_action):
         """ Randomly corrupt an action with error probs (slot_err_probability and slot_err_mode) on Slot and Intent (intent_err_probability). """

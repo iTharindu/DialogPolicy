@@ -135,9 +135,9 @@ if __name__ == "__main__":
     parser.add_argument('--learning_phase', dest='learning_phase',
                         default='all', type=str, help='train/test/all; default is all')
     parser.add_argument('--alpha', dest='alpha',
-                        default=0, type=int, help='prioratize failed dialogues')
+                        default=0, type=float, help='prioratize failed dialogues')
     parser.add_argument('--beta', dest='beta',
-                        default=1, type=int, help='prioratize failed dialogues')
+                        default=1, type=float, help='prioratize failed dialogues')
 
     args = parser.parse_args()
     params = vars(args)
@@ -363,6 +363,7 @@ def save_performance_records(path, agt, records):
         print e
 
 
+store_reward = []
 """ Run N simulation Dialogues """
 
 
@@ -374,11 +375,13 @@ def simulation_epoch(simulation_epoch_size):
     res = {}
     for episode in xrange(simulation_epoch_size):
         dialog_manager.initialize_episode()
+        sample_goal = user_sim.get_goal()
         episode_over = False
         while(not episode_over):
             episode_over, reward = dialog_manager.next_turn()
             cumulative_reward += reward
             if episode_over:
+                store_reward.append({"agenda": sample_goal, "reward": reward})
                 if reward > 0:
                     successes += 1
                     print ("simulation episode %s: Success" % (episode))
@@ -513,6 +516,11 @@ def run_episodes(count, status):
                             theta_1=exploration_params['theta_1'], theta_2=exploration_params['theta_2'], theta_3=exploration_params['theta_3'], additive=False)
 
             ##################################################################################################
+            if params['trained_model_path'] == None and selfplay_params['prioratize_failed'] == 'True':
+                if (episode > selfplay_params["update_start"]):
+                    if ((episode + 1) % selfplay_params['update_step'] == 0):
+                        selfPlay.prioratize_failed_dialogues(
+                            store_reward, alpha=alpha, beta=beta, normalize=reward_based_params["method"])
 
         print("Progress: %s / %s, Success rate: %s / %s Avg reward: %.2f Avg turns: %.2f" % (episode+1, count,
                                                                                              successes, episode+1, float(cumulative_reward)/(episode+1), float(cumulative_turns)/(episode+1)))
