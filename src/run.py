@@ -364,6 +364,7 @@ def save_performance_records(path, agt, records):
 
 
 store_reward = []
+update = False
 """ Run N simulation Dialogues """
 
 
@@ -371,7 +372,8 @@ def simulation_epoch(simulation_epoch_size):
     successes = 0
     cumulative_reward = 0
     cumulative_turns = 0
-
+    global store_reward
+    global update
     res = {}
     for episode in xrange(simulation_epoch_size):
         dialog_manager.initialize_episode()
@@ -381,7 +383,10 @@ def simulation_epoch(simulation_epoch_size):
             episode_over, reward = dialog_manager.next_turn()
             cumulative_reward += reward
             if episode_over:
-                store_reward.append({"agenda": sample_goal, "reward": reward})
+                if update:
+                    print(update)
+                    store_reward.append(
+                        {"agenda": sample_goal, "reward": reward})
                 if reward > 0:
                     successes += 1
                     print ("simulation episode %s: Success" % (episode))
@@ -441,6 +446,8 @@ def run_episodes(count, status):
     successes = 0
     cumulative_reward = 0
     cumulative_turns = 0
+    global store_reward
+    global update
     if params['trained_model_path'] != None:
         user_sim.phase = "testing"
 
@@ -517,18 +524,26 @@ def run_episodes(count, status):
 
             ##################################################################################################
             if params['trained_model_path'] == None and selfplay_params['prioratize_failed'] == 'True':
+                if (episode + 4 > selfplay_params["update_start"]):
+                    update = True
+                    print("update set to True")
                 if (episode > selfplay_params["update_start"]):
+
                     if ((episode + 1) % selfplay_params['update_step'] == 0):
+                        print(len(store_reward))
                         selfPlay.prioratize_failed_dialogues(
                             store_reward, alpha=alpha, beta=beta, normalize=reward_based_params["method"])
+
+                        store_reward = []
+                        print(len(store_reward))
 
         print("Progress: %s / %s, Success rate: %s / %s Avg reward: %.2f Avg turns: %.2f" % (episode+1, count,
                                                                                              successes, episode+1, float(cumulative_reward)/(episode+1), float(cumulative_turns)/(episode+1)))
     print("Success rate: %s / %s Avg reward: %.2f Avg turns: %.2f" % (successes,
                                                                       count, float(cumulative_reward)/count, float(cumulative_turns)/count))
     with open('deep_dialog/checkpoints/results.txt', 'a') as results:
-        results.write("Success rate: %s / %s Avg reward: %.2f Avg turns: %.2f \n" %
-                      (successes, count, float(cumulative_reward)/count, float(cumulative_turns)/count))
+        results.write("Success rate: %s / %s Avg reward: %.2f Avg turns: %.2f  Best success: %.2f \n" %
+                      (successes, count, float(cumulative_reward)/count, float(cumulative_turns)/count, float(best_res['success_rate'])))
 
     save_model('deep_dialog/checkpoints/rl_agent/models/', agt,
                best_res['success_rate'], best_model['model'], best_res['epoch'], episode)

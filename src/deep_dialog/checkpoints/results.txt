@@ -1,46 +1,15 @@
 
-#######################################result for training sample 25 turn count 0#######################################
-Success rate: 70 / 150 Avg reward: 3.96 Avg turns: 26.08 
-Success rate: 90 / 100 Avg reward: 60.21 Avg turns: 17.58 
-Success rate: 0 / 100 Avg reward: -59.25 Avg turns: 40.50 
-#######################################result for training sample 30 turn count 0#######################################
-#######################################result for training sample 25 turn count 0 alpha 0.1 beta 0.1#######################################
-#######################################result for training sample 30 turn count 0 alpha 0.1 beta 0.5#######################################
-#######################################result for training sample 35 turn count 0 alpha 0.1 beta 1#######################################
-#######################################result for training sample 40 turn count 0 alpha 0.1 beta 2#######################################
-#######################################result for training sample 45 turn count 0 alpha 0.1 beta 3#######################################
-#######################################result for training sample 50 turn count 0 alpha 0.2 beta 0.1#######################################
-#######################################result for training sample 55 turn count 0 alpha 0.2 beta 0.5#######################################
-#######################################result for training sample 60 turn count 0 alpha 0.2 beta 1#######################################
-#######################################result for training sample 25 turn count 0 alpha 0.1 beta 0.1#######################################
-#######################################result for training sample 30 turn count 0 alpha 0.1 beta 0.5#######################################
-#######################################result for training sample 35 turn count 0 alpha 0.1 beta 1#######################################
-#######################################result for training sample 40 turn count 0 alpha 0.2 beta 0.1#######################################
-#######################################result for training sample 45 turn count 0 alpha 0.2 beta 0.5#######################################
-#######################################result for training sample 50 turn count 0 alpha 0.2 beta 1#######################################
-#######################################result for training sample 55 turn count 0 alpha 0.3 beta 0.1#######################################
-#######################################result for training sample 60 turn count 0 alpha 0.3 beta 0.5#######################################
-#######################################result for training sample 65 turn count 0 alpha 0.3 beta 1#######################################
-#######################################result for training sample 25 turn count 0 alpha 0.1 beta 0.1#######################################
-Success rate: 39 / 150 Avg reward: -22.83 Avg turns: 30.05 
-Success rate: 46 / 100 Avg reward: 3.79 Avg turns: 24.82 
-Success rate: 0 / 100 Avg reward: -57.10 Avg turns: 36.20 
-#######################################result for training sample 30 turn count 0 alpha 0.1 beta 0.5#######################################
-#######################################result for training sample 35 turn count 0 alpha 0.1 beta 1#######################################
-#######################################result for training sample 40 turn count 0 alpha 0.2 beta 0.1#######################################
-#######################################result for training sample 45 turn count 0 alpha 0.2 beta 0.5#######################################
-#######################################result for training sample 50 turn count 0 alpha 0.2 beta 1#######################################
-#######################################result for training sample 55 turn count 0 alpha 0.3 beta 0.1#######################################
-#######################################result for training sample 60 turn count 0 alpha 0.3 beta 0.5#######################################
-#######################################result for training sample 65 turn count 0 alpha 0.3 beta 1#######################################
-#######################################result for training sample 25 turn count 0 alpha 0.1 beta 0.1#######################################
-Success rate: 66 / 100 Avg reward: 28.44 Avg turns: 23.52 
-Success rate: 0 / 100 Avg reward: -56.88 Avg turns: 35.76 
-#######################################result for training sample 30 turn count 0 alpha 0.1 beta 0.5#######################################
-#######################################result for training sample 35 turn count 0 alpha 0.1 beta 1#######################################
-#######################################result for training sample 40 turn count 0 alpha 0.2 beta 0.1#######################################
-#######################################result for training sample 45 turn count 0 alpha 0.2 beta 0.5#######################################
-#######################################result for training sample 50 turn count 0 alpha 0.2 beta 1#######################################
-#######################################result for training sample 55 turn count 0 alpha 0.3 beta 0.1#######################################
-#######################################result for training sample 60 turn count 0 alpha 0.3 beta 0.5#######################################
-#######################################result for training sample 65 turn count 0 alpha 0.3 beta 1#######################################
+#######################################result for training sample 25 turn count 0 alpha 0.05 beta 0.1   #######################################
+Success rate: 53 / 150 Avg reward: -10.22 Avg turns: 27.24  Best success: 0.85 
+Success rate: 78 / 100 Avg reward: 47.13 Avg turns: 14.94  Best success: 0.00 
+#######################################result for training sample 30 turn count 0 alpha 0.05 beta 0.5   #######################################
+#######################################result for training sample 25 turn count 0 alpha 0.05 beta 0.1   #######################################
+Success rate: 26 / 150 Avg reward: -35.35 Avg turns: 34.29  Best success: 0.60 
+Success rate: 24 / 100 Avg reward: -25.43 Avg turns: 30.46  Best success: 0.00 
+Success rate: 0 / 100 Avg reward: -58.43 Avg turns: 38.86  Best success: 0.00 
+#######################################result for training sample 30 turn count 0 alpha 0.05 beta 0.1   #######################################
+#######################################result for training sample 25 turn count 0 alpha 0.05 beta 0.1   #######################################
+Success rate: 57 / 150 Avg reward: -5.96 Avg turns: 25.12  Best success: 0.85 
+Success rate: 68 / 100 Avg reward: 30.62 Avg turns: 23.96  Best success: 0.00 
+Success rate: 0 / 100 Avg reward: -57.73 Avg turns: 37.46  Best success: 0.00 
+#######################################result for training sample 30 turn count 0 alpha 0.05 beta 0.1   #######################################

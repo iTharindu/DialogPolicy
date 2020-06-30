@@ -44,7 +44,8 @@ class SelfPlay():
         self.inform_count = 0
         self.count_error = 0
         self.count_e_n_c = 0
-        self.max_reward = 60
+        self.max_reward = 100
+        self.mean_reward = 5
 
         self.sum_prob = 0
         self.list_slots = []
@@ -74,7 +75,7 @@ class SelfPlay():
         self.inform_count = 0
         self.count_error = 0
         self.count_e_n_c = 0
-        self.max_reward = 60
+        self.max_reward = 100
 
         self.sum_prob = 0
         self.list_slots = []
@@ -291,7 +292,6 @@ class SelfPlay():
 
     def prioratize_failed_dialogues(self, reward_list, alpha=0.2, beta=1, normalize='naive'):
         dict_slots_rewards = {}
-        # print(reward_list)
         for i in self.slots:
             dict_slots_rewards[i] = {}
             dict_slots_rewards[i]['reward'] = 0
@@ -307,26 +307,30 @@ class SelfPlay():
             for j in request_slots:
                 dict_slots_rewards[j]['reward'] += reward
                 dict_slots_rewards[j]['count'] += 1
-
         for i in self.slots:
+            print(i)
+            print("dict_slot_reawrd before", dict_slots_rewards[i]['reward'])
+            print("count", dict_slots_rewards[i]['count'])
             if dict_slots_rewards[i]['count'] != 0:
-                dict_slots_rewards[i]['reward'] = dict_slots_rewards[i]['reward'] * - \
-                    1 + self.max_reward
+                dict_slots_rewards[i]['reward'] = dict_slots_rewards[i]['reward'] * \
+                    (-1) + (self.max_reward * dict_slots_rewards[i]['count'])
+                print("reward after", dict_slots_rewards[i]['reward'])
                 dict_slots_rewards[i]['mean_reward'] = dict_slots_rewards[i]['reward'] / \
                     dict_slots_rewards[i]['count']
+                print("mean reward", dict_slots_rewards[i]['mean_reward'])
             else:
-                dict_slots_rewards[i]['mean_reward'] = 1
+                dict_slots_rewards[i]['mean_reward'] = self.mean_reward
+            print("probs before", self.dict_slots_prob[i])
             dict_slots_rewards[i]['probs'] = self.dict_slots_prob[i] * \
                 dict_slots_rewards[i]['mean_reward'] ** alpha
+            print("probs after", dict_slots_rewards[i]['probs'])
 
         self.list_slots = []
         self.list_probs = []
         for i in self.slots:
             self.list_slots.append(i)
             self.list_probs.append(dict_slots_rewards[i]['probs'])
-        print(self.list_probs)
         if normalize == 'softmax':
             self.list_probs = softmax(self.list_probs, beta=beta)
         else:
             self.list_probs = probs_normalize(self.list_probs, beta=beta)
-        print(self.list_probs)

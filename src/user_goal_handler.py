@@ -68,7 +68,7 @@ movie_kb = pickle.load(open(movie_kb_path, 'rb'))
 training_sample_count = 25
 turn_count = 0
 
-while training_sample_count <= 80:
+while training_sample_count <= 30:
     if selfplay_params['prioratize_failed'] == "False":
         training_sample = training_dict[:training_sample_count]
 
@@ -101,7 +101,7 @@ while training_sample_count <= 80:
                 training_sample = training_dict[:training_sample_count]
 
                 with open('deep_dialog/checkpoints/results.txt', 'a') as results:
-                    results.write("#######################################result for training sample {} turn count {} alpha {} beta {}#######################################\n".format(
+                    results.write("#######################################result for training sample {} turn count {} alpha {} beta {}   #######################################\n".format(
                         training_sample_count, turn_count, alpha, beta))
 
                 print(len(training_sample))
