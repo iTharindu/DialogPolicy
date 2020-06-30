@@ -68,7 +68,7 @@ movie_kb = pickle.load(open(movie_kb_path, 'rb'))
 training_sample_count = 25
 turn_count = 0
 
-while training_sample_count <= 30:
+while training_sample_count <= 80:
     if selfplay_params['prioratize_failed'] == "False":
         training_sample = training_dict[:training_sample_count]
 
