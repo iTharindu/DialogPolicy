@@ -292,6 +292,9 @@ nlu_model.load_nlu_model(nlu_model_path)
 agent.set_nlu_model(nlu_model)
 user_sim.set_nlu_model(nlu_model)
 
+if agent_params['trained_model_path']:
+    user_sim.phase = "testing"
+
 
 ################################################################################
 # Dialog Manager

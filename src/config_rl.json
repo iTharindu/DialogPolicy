@@ -1,0 +1,19 @@
+{
+    "_comments": {
+        "selfplay_params": "is general parameters epsilon denoted to noise introduced set exploration to True for running Exploration at later stages, update step denotes when updates happening",
+        "exploration_params": "is exploration related params, thetas denote the increment factor and additive denotes whether it is linear or exponential increment"
+    },
+    "alpha": 0.25,
+    "beta": 0.5,
+    "Rl algorithms": [
+        {
+            "dqn": 10
+        },
+        {
+            "duel": 11
+        },
+        {
+            "double": 12
+        }
+    ]
+}

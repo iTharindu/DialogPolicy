@@ -25,7 +25,7 @@ def probs_normalize(x, beta=1):
 
 class SelfPlay():
 
-    def __init__(self, sample_goals, movie_kb, epsilon_1, epsilon_2, epsilon_3):
+    def __init__(self, sample_goals, movie_kb, epsilon_1, epsilon_2, epsilon_3, constant_reward=True):
         self.slots = ['actor', 'actress', 'city', 'closing', 'critic_rating', 'date', 'description', 'distanceconstraints', 'genre',
                       'greeting', 'implicit_value', 'movie_series', 'moviename', 'mpaa_rating', 'numberofpeople', 'numberofkids', 'taskcomplete',
                       'other', 'price', 'seating', 'starttime', 'state', 'theater', 'theater_chain', 'video_format', 'zip', 'result', 'ticket', 'mc_list']
@@ -45,6 +45,7 @@ class SelfPlay():
         self.count_error = 0
         self.count_e_n_c = 0
         self.max_reward = 100
+        self.constant_reward = constant_reward
         self.mean_reward = 5
 
         self.sum_prob = 0
@@ -94,6 +95,7 @@ class SelfPlay():
 
     def sample_random_goal(self):
         sample_goal = random.choice(self.sample)
+        print("random goal")
         return sample_goal
 
     def set_sample(self, goal_set):
