@@ -46,7 +46,7 @@ class SelfPlay():
         self.count_e_n_c = 0
         self.max_reward = 100
         self.constant_reward = constant_reward
-        self.mean_reward = 5
+        self.mean_reward = 1
 
         self.sum_prob = 0
         self.list_slots = []
@@ -324,7 +324,8 @@ class SelfPlay():
                 dict_slots_rewards[i]['mean_reward'] = self.mean_reward
             print("probs before", self.dict_slots_prob[i])
             dict_slots_rewards[i]['probs'] = self.dict_slots_prob[i] * \
-                dict_slots_rewards[i]['mean_reward'] ** alpha
+                ((dict_slots_rewards[i]['mean_reward'] /
+                  self.max_reward) ** alpha)
             print("probs after", dict_slots_rewards[i]['probs'])
 
         self.list_slots = []
@@ -336,3 +337,8 @@ class SelfPlay():
             self.list_probs = softmax(self.list_probs, beta=beta)
         else:
             self.list_probs = probs_normalize(self.list_probs, beta=beta)
+
+        for i in range(len(self.slots)):
+            self.dict_slots_prob[self.slots[i]] = self.list_probs[i]
+            print(self.slots[i])
+            print(self.dict_slots_prob[self.slots[i]])

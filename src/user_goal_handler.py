@@ -65,7 +65,7 @@ with open('deep_dialog/data/training_user_goals.pickle', 'wb') as train:
 movie_kb_path = 'deep_dialog/data/movie_kb.1k.p'
 movie_kb = pickle.load(open(movie_kb_path, 'rb'))
 
-training_sample_count = 25
+training_sample_count = 10
 turn_count = 0
 
 while training_sample_count <= 80:

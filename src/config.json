@@ -21,12 +21,10 @@
     },
     "reward_based_params": {
         "alpha": [
-            0.1,
-            0.25,
             0.5
         ],
         "beta": [
-            0.5
+            1
         ],
         "method": "naive"
     }

@@ -1,198 +1,87 @@
 
+###################################### #result for training sample 25 turn count 0 agent dqn #######################################
+###################################### #result for training sample 30 turn count 0 agent dqn #######################################
+###################################### #result for training sample 25 turn count 0 agent dqn #######################################
+###################################### #result for training sample 30 turn count 0 agent dqn #######################################
+###################################### #result for training sample 25 turn count 0 agent dqn #######################################
+###################################### #result for training sample 30 turn count 0 agent dqn #######################################
+###################################### #result for training sample 25 turn count 0 agent dqn #######################################
+###################################### #result for training sample 25 turn count 0 agent dqn #######################################
+###################################### #result for training sample 30 turn count 0 agent dqn #######################################
+###################################### #result for training sample 25 turn count 0 agent dqn #######################################
+Success rate: 37 / 100 Avg reward: -8.68 Avg turns: 28.16  Best success: 0.85 
+Success rate: 50 / 100 Avg reward: 10.60 Avg turns: 20.80  Best success: 0.85 
+###################################### #result for training sample 30 turn count 0 agent dqn #######################################
+###################################### #result for training sample 25 turn count 0 agent dqn #######################################
+###################################### #result for training sample 25 turn count 0 agent dqn #######################################
+Success rate: 50 / 150 Avg reward: -14.39 Avg turns: 30.77  Best success: 0.75 
+Success rate: 43 / 100 Avg reward: -2.32 Avg turns: 29.84  Best success: 0.75 
+###################################### #result for training sample 30 turn count 0 agent dqn #######################################
+###################################### #result for training sample 25 turn count 0 agent dqn #######################################
+###################################### #result for training sample 25 turn count 0 agent dqn #######################################
+###################################### #result for training sample 25 turn count 0 agent dqn #######################################
 #######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 30 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-Success rate: 45 / 100 Avg reward: 2.16 Avg turns: 25.68  Best success: 0.85 
-#######################################result for training sample 30 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-Success rate: 5 / 50 Avg reward: -44.48 Avg turns: 34.96  Best success: 0.60 
-Success rate: 55 / 50 Avg reward: -21.46 Avg turns: 72.92  Best success: 0.60 
-#######################################result for training sample 30 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-Success rate: 15 / 50 Avg reward: -17.00 Avg turns: 28.00  Best success: 0.90 
-Success rate: 98 / 100 Avg reward: 43.96 Avg turns: 30.28  Best success: 0.90 
-#######################################result for training sample 30 turn count 0#######################################
-#######################################result for training sample 25 turn count 0 alpha 0.2 beta 0.5   #######################################
-#######################################result for training sample 30 turn count 0 alpha 0.2 beta 0.5   #######################################
-#######################################result for training sample 25 turn count 0 alpha 0.2 beta 0.5   #######################################
-Success rate: 60 / 150 Avg reward: -4.67 Avg turns: 27.33  Best success: 0.90 
-Success rate: 78 / 100 Avg reward: 45.69 Avg turns: 17.82  Best success: 0.00 
-Success rate: 0 / 100 Avg reward: -58.37 Avg turns: 38.74  Best success: 0.00 
-#######################################result for training sample 30 turn count 0 alpha 0.2 beta 0.5   #######################################
-Success rate: 59 / 150 Avg reward: -4.16 Avg turns: 24.72  Best success: 0.85 
-Success rate: 68 / 100 Avg reward: 35.19 Avg turns: 14.82  Best success: 0.00 
-Success rate: 0 / 100 Avg reward: -54.68 Avg turns: 31.36  Best success: 0.00 
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 30 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-Success rate: 51 / 100 Avg reward: 9.00 Avg turns: 26.40  Best success: 0.95 
-Success rate: 124 / 100 Avg reward: 48.00 Avg turns: 45.60  Best success: 0.95 
-#######################################result for training sample 30 turn count 0#######################################
-Success rate: 30 / 100 Avg reward: -18.97 Avg turns: 31.94  Best success: 0.80 
-Success rate: 85 / 100 Avg reward: -4.42 Avg turns: 56.84  Best success: 0.80 
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-Success rate: 35 / 100 Avg reward: -12.54 Avg turns: 31.08  Best success: 0.90 
-Success rate: 90 / 100 Avg reward: 61.39 Avg turns: 15.22  Best success: 0.90 
-#######################################result for training sample 30 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 30 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-#######################################result for training sample 25 turn count 0#######################################
-Success rate: 31 / 100 Avg reward: -17.72 Avg turns: 31.84  Best success: 0.85 
-Success rate: 43 / 100 Avg reward: -1.73 Avg turns: 28.66  Best success: 0.85 
-#######################################result for training sample 30 turn count 0#######################################
-Success rate: 18 / 100 Avg reward: -35.86 Avg turns: 36.92  Best success: 0.45 
-Success rate: 29 / 100 Avg reward: -20.64 Avg turns: 32.88  Best success: 0.45 
-#######################################result for training sample 25 turn count 0 alpha 0.25 beta 0.5   #######################################
 #######################################result for training sample 25 turn count 0 alpha 0.1 beta 0.5   #######################################
+#######################################result for training sample 25 turn count 0#######################################
+#######################################result for training sample 25 turn count 0#######################################
+#######################################result for training sample 30 turn count 0#######################################
+#######################################result for training sample 25 turn count 0#######################################
+Success rate: 24 / 100 Avg reward: -25.40 Avg turns: 30.40  Best success: 0.75 
+#######################################result for training sample 30 turn count 0#######################################
+#######################################result for training sample 25 turn count 0#######################################
+Success rate: 37 / 100 Avg reward: -7.15 Avg turns: 25.10  Best success: 0.85 
+#######################################result for training sample 30 turn count 0#######################################
+#######################################result for training sample 25 turn count 0#######################################
+#######################################result for training sample 30 turn count 0#######################################
+#######################################result for training sample 25 turn count 0#######################################
+#######################################result for training sample 25 turn count 0#######################################
+#######################################result for training sample 55 turn count 0#######################################
+#######################################result for training sample 55 turn count 0#######################################
+Success rate: 40 / 100 Avg reward: -4.60 Avg turns: 27.20  Best success: 0.90 
+Success rate: 83 / 100 Avg reward: 51.54 Avg turns: 18.12  Best success: 0.90 
+#######################################result for training sample 60 turn count 0#######################################
+#######################################result for training sample 55 turn count 0#######################################
+#######################################result for training sample 60 turn count 0#######################################
+#######################################result for training sample 55 turn count 0#######################################
+#######################################result for training sample 60 turn count 0#######################################
+#######################################result for training sample 55 turn count 0#######################################
+#######################################result for training sample 55 turn count 0#######################################
+#######################################result for training sample 55 turn count 0#######################################
+Success rate: 10 / 100 Avg reward: -45.34 Avg turns: 36.68  Best success: 0.55 
+Success rate: 70 / 100 Avg reward: 33.99 Avg turns: 22.02  Best success: 0.55 
+#######################################result for training sample 60 turn count 0#######################################
+#######################################result for training sample 55 turn count 0 alpha 0.1 beta 0.5   #######################################
+#######################################result for training sample 55 turn count 0 alpha 0.1 beta 0.5   #######################################
+Success rate: 75 / 100 Avg reward: 43.14 Avg turns: 15.72  Best success: 0.00 
+Success rate: 0 / 100 Avg reward: -54.94 Avg turns: 31.88  Best success: 0.00 
+#######################################result for training sample 55 turn count 0 alpha 0.1 beta 0.5   #######################################
+#######################################result for training sample 55 turn count 0 alpha 0.1 beta 0.5   #######################################
+#######################################result for training sample 55 turn count 0 alpha 0.1 beta 0.5   #######################################
+#######################################result for training sample 55 turn count 0 alpha 0.1 beta 0.5   #######################################
+Success rate: 45 / 150 Avg reward: -17.08 Avg turns: 28.16  Best success: 0.85 
+Success rate: 52 / 100 Avg reward: 12.79 Avg turns: 21.22  Best success: 0.00 
+#######################################result for training sample 55 turn count 0 alpha 0.1 beta 0.5   #######################################
+Success rate: 43 / 150 Avg reward: -19.49 Avg turns: 29.77  Best success: 0.65 
+Success rate: 48 / 100 Avg reward: 8.68 Avg turns: 19.84  Best success: 0.00 
+Success rate: 0 / 100 Avg reward: -57.70 Avg turns: 37.40  Best success: 0.00 
+#######################################result for training sample 55 turn count 0 alpha 0.1 beta 0.5   #######################################
+Success rate: 58 / 150 Avg reward: -5.47 Avg turns: 25.75  Best success: 0.85 
+Success rate: 90 / 100 Avg reward: 60.46 Avg turns: 17.08  Best success: 0.00 
+Success rate: 0 / 100 Avg reward: -57.60 Avg turns: 37.20  Best success: 0.00 
+#######################################result for training sample 55 turn count 0 alpha 0.1 beta 1   #######################################
+Success rate: 69 / 150 Avg reward: 3.54 Avg turns: 25.32  Best success: 0.90 
+Success rate: 87 / 100 Avg reward: 57.13 Avg turns: 16.54  Best success: 0.00 
+Success rate: 0 / 100 Avg reward: -59.00 Avg turns: 40.00  Best success: 0.00 
+#######################################result for training sample 55 turn count 0 alpha 0.5 beta 0.5   #######################################
+Success rate: 35 / 150 Avg reward: -25.91 Avg turns: 29.83  Best success: 0.85 
+Success rate: 82 / 100 Avg reward: 51.41 Avg turns: 15.98  Best success: 0.00 
+Success rate: 0 / 100 Avg reward: -55.13 Avg turns: 32.26  Best success: 0.00 
+#######################################result for training sample 55 turn count 0 alpha 0.5 beta 1   #######################################
+Success rate: 64 / 150 Avg reward: 0.03 Avg turns: 24.33  Best success: 0.90 
+Success rate: 87 / 100 Avg reward: 57.94 Avg turns: 14.92  Best success: 0.00 
+Success rate: 0 / 100 Avg reward: -59.23 Avg turns: 40.46  Best success: 0.00 
+#######################################result for training sample 55 turn count 0 alpha 1 beta 0.5   #######################################
+Success rate: 58 / 150 Avg reward: -5.63 Avg turns: 26.07  Best success: 0.90 
+Success rate: 82 / 100 Avg reward: 50.45 Avg turns: 17.90  Best success: 0.00 
+Success rate: 0 / 100 Avg reward: -55.01 Avg turns: 32.02  Best success: 0.00 
+#######################################result for training sample 55 turn count 0 alpha 1 beta 1   #######################################

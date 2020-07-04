@@ -1,3 +1,30 @@
+"""
+Created on May 22, 2016
+
+This should be a simple minimalist run file. It's only responsibility should be to parse the arguments (which agent, user simulator to use) and launch a dialog simulation.
+
+Rule-agent: python run.py --agt 6 --usr 1 --max_turn 40 --episodes 150 --movie_kb_path .\deep_dialog\data\movie_kb.1k.p --run_mode 2
+
+movie_kb:
+movie_kb.1k.p: 94% success rate
+movie_kb.v2.p: 36% success rate
+
+user goal files:
+first turn: user_goals_first_turn_template.v2.p
+all turns: user_goals_all_turns_template.p
+user_goals_first_turn_template.part.movie.v1.p: a subset of user goal. [Please use this one, the upper bound success rate on movie_kb.1k.json is 0.9765.]
+
+Commands:
+Rule: python run.py --agt 5 --usr 1 --max_turn 40 --episodes 150 --movie_kb_path .\deep_dialog\data\movie_kb.1k.p --goal_file_path .\deep_dialog\data\user_goals_first_turn_template.part.movie.v1.p --intent_err_prob 0.00 --slot_err_prob 0.00 --episodes 500 --act_level 1 --run_mode 1
+
+Training:
+RL: python run.py --agt 9 --usr 1 --max_turn 40 --movie_kb_path .\deep_dialog\data\movie_kb.1k.p --dqn_hidden_size 80 --experience_replay_pool_size 1000 --episodes 500 --simulation_epoch_size 100 --write_model_dir .\deep_dialog\checkpoints\rl_agent\ --run_mode 3 --act_level 0 --slot_err_prob 0.05 --intent_err_prob 0.00 --batch_size 16 --goal_file_path .\deep_dialog\data\user_goals_first_turn_template.part.movie.v1.p --warm_start 1 --warm_start_epochs 120
+
+Predict:
+RL: python run.py --agt 9 --usr 1 --max_turn 40 --movie_kb_path .\deep_dialog\data\movie_kb.1k.p --dqn_hidden_size 80 --experience_replay_pool_size 1000 --episodes 300 --simulation_epoch_size 100 --write_model_dir .\deep_dialog\checkpoints\rl_agent\ --slot_err_prob 0.00 --intent_err_prob 0.00 --batch_size 16 --goal_file_path .\deep_dialog\data\user_goals_first_turn_template.part.movie.v1.p --episodes 200 --trained_model_path .\deep_dialog\checkpoints\rl_agent\agt_9_22_30_0.37000.p --run_mode 3
+
+@author: xiul, t-zalipt
+"""
 
 
 import argparse
@@ -7,7 +34,7 @@ import os
 import cPickle as pickle
 
 from deep_dialog.dialog_system import DialogManager, text_to_dict
-from deep_dialog.agents import AgentCmd, InformAgent, RequestAllAgent, RandomAgent, EchoAgent, RequestBasicsAgent, AgentDQN
+from deep_dialog.agents import AgentCmd, InformAgent, RequestAllAgent, RandomAgent, EchoAgent, RequestBasicsAgent, AgentDQN, DQNAgent, DoubleAgent, AgentDuel, NoisyNet, A2CAgent, ReplayBuffer
 from deep_dialog.usersims import RuleSimulator
 from deep_dialog.self_play import SelfPlay
 
@@ -111,8 +138,8 @@ if __name__ == "__main__":
                         default=0, type=float, help='prioratize failed dialogues')
     parser.add_argument('--beta', dest='beta',
                         default=1, type=float, help='prioratize failed dialogues')
-    parser.add_argument('--test_path', dest='test_path', type=str,
-                        default='deep_dialog/data/test_user_goals.pickle', help='path to the test set')
+    parser.add_argument('--test_path', dest='test_path',
+                        default="deep_dialog/data/test_user_goals.pickle", type=str, help='test goal set')
 
     args = parser.parse_args()
     params = vars(args)
@@ -122,7 +149,6 @@ if __name__ == "__main__":
 
 with open("config.json") as json_config_file:
     config = json.load(json_config_file)
-
 
 selfplay_params = config["selfplay_params"]
 exploration_params = config['exploration_params']
@@ -136,10 +162,11 @@ usr = params['usr']
 
 dict_path = params['dict_path']
 goal_file_path = params['goal_file_path']
-test_path = params['test_path']
+test_goals = params['test_path']
 
 # load the user goals from .p file
 all_goal_set = pickle.load(open(goal_file_path, 'rb'))
+test_user_goals = pickle.load(open(test_goals))
 
 print('**********************************************************************8',
       type(all_goal_set))
@@ -177,15 +204,10 @@ dialog_config.auto_suggest = params['auto_suggest']
 
 
 ###############################################################################
-# Load test set
-###############################################################################
-test_user_goals = pickle.load(open(test_path, 'rb'))
-###############################################################################
 
 selfPlay = SelfPlay(goal_set['all'], movie_kb, selfplay_params["epsilon_1"],
                     selfplay_params["epsilon_2"], selfplay_params["epsilon_3"])
 print('goal set length:', len(goal_set['all']))
-
 ################################################################################
 #   Parameters for Agents
 ################################################################################
@@ -219,6 +241,8 @@ elif agt == 5:
     agent = RequestBasicsAgent(movie_kb, act_set, slot_set, agent_params)
 elif agt == 9:
     agent = AgentDQN(movie_kb, act_set, slot_set, agent_params)
+elif agt == 10:
+    agent = DQNAgent(movie_kb, act_set, slot_set, agent_params)
 
 ################################################################################
 #    Add your agent here
@@ -244,14 +268,13 @@ elif usr == 1:
     user_sim = RuleSimulator(selfPlay, movie_dictionary,
                              act_set, slot_set, usersim_params)
 
-
 ################################################################################
 #    Add your user simulator here
 ################################################################################
 else:
     pass
 
-user_sim.phase = "testing"
+
 ################################################################################
 # load trained NLG model
 ################################################################################
@@ -274,6 +297,9 @@ nlu_model.load_nlu_model(nlu_model_path)
 
 agent.set_nlu_model(nlu_model)
 user_sim.set_nlu_model(nlu_model)
+
+if agent_params['trained_model_path']:
+    user_sim.phase = "testing"
 
 
 ################################################################################
@@ -427,13 +453,14 @@ def warm_start_simulation():
 
 def run_episodes(count, status):
     successes = 0
-
+    cumulative_reward = 0
+    cumulative_turns = 0
     global store_reward
     global update
     if params['trained_model_path'] != None:
         user_sim.phase = "testing"
 
-    if agt == 9 and params['trained_model_path'] == None and warm_start == 1:
+    if agt == 9 or agt == 10 and params['trained_model_path'] == None and warm_start == 1:
         print ('warm_start starting ...')
         warm_start_simulation()
         print ('warm_start finished, start RL training ...')
@@ -457,7 +484,7 @@ def run_episodes(count, status):
                 cumulative_turns += dialog_manager.state_tracker.turn_count
 
         # simulation
-        if agt == 9 and params['trained_model_path'] == None:
+        if agt == 9 or agt == 10 and params['trained_model_path'] == None:
             agent.predict_mode = True
             simulation_res = simulation_epoch(simulation_epoch_size)
 
@@ -467,23 +494,29 @@ def run_episodes(count, status):
 
             if simulation_res['success_rate'] >= best_res['success_rate']:
                 if simulation_res['success_rate'] >= success_rate_threshold:  # threshold = 0.30
-                    agent.experience_replay_pool = []
+                    if agt == 9:
+                        agent.experience_replay_pool = []
+                    else:
+                        agent.memory = ReplayBuffer(43, 10000, 16, 1234)
                     simulation_epoch(simulation_epoch_size)
 
             if simulation_res['success_rate'] > best_res['success_rate']:
-                best_model['model'] = copy.deepcopy(agent)
+                if agt == 9:
+                    best_model['model'] = copy.deepcopy(agent)
                 best_res['success_rate'] = simulation_res['success_rate']
                 best_res['ave_reward'] = simulation_res['ave_reward']
                 best_res['ave_turns'] = simulation_res['ave_turns']
                 best_res['epoch'] = episode
-
-            agent.clone_dqn = copy.deepcopy(agent.dqn)
+            if agt == 9:
+                agent.clone_dqn = copy.deepcopy(agent.dqn)
             agent.train(batch_size, 1)
             agent.predict_mode = False
 
             print ("Simulation success rate %s, Ave reward %s, Ave turns %s, Best success rate %s" % (
                 performance_records['success_rate'][episode], performance_records['ave_reward'][episode], performance_records['ave_turns'][episode], best_res['success_rate']))
 
+            ###########################################################################################
+            ## self-play explorotion  #################################################################
             if params['trained_model_path'] == None and selfplay_params['exploration'] == 'True':
                 if ((episode + 1) % selfplay_params['update_step'] == 0):
                     if exploration_params['additive'] == 'True':
@@ -520,15 +553,13 @@ def run_episodes(count, status):
     status['successes'] += successes
     status['count'] += count
 
-    print("Start testing .... ")
-
-    count = 100
     successes = 0
     cumulative_reward = 0
     cumulative_turns = 0
+    count = 100
 
-    selfPlay.set_sample(test_user_goals)
     user_sim.phase = "testing"
+    selfPlay.set_sample(test_user_goals)
 
     for episode in xrange(100):
         print ("Episode: %s" % (episode))
@@ -548,12 +579,8 @@ def run_episodes(count, status):
 
                 cumulative_turns += dialog_manager.state_tracker.turn_count
 
-        print("Progress: %s / %s, Success rate: %s / %s Avg reward: %.2f Avg turns: %.2f" % (episode+1, count,
-                                                                                             successes, episode+1, float(cumulative_reward)/(episode+1), float(cumulative_turns)/(episode+1)))
-
     print("Success rate: %s / %s Avg reward: %.2f Avg turns: %.2f" % (successes,
                                                                       count, float(cumulative_reward)/count, float(cumulative_turns)/count))
-
     with open('deep_dialog/checkpoints/results.txt', 'a') as results:
         results.write("Success rate: %s / %s Avg reward: %.2f Avg turns: %.2f  Best success: %.2f \n" %
                       (successes, count, float(cumulative_reward)/count, float(cumulative_turns)/count, float(best_res['success_rate'])))

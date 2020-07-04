@@ -16,7 +16,12 @@ with open("config_rl.json") as json_config_file:
 
 alpha = config["alpha"]
 beta = config["beta"]
-algorithms = config["Rl algorithms"]
+rlalgorithms = config["Rl algorithms"]
+algorithm = config["algorithm"]
+
+for i in rlalgorithms:
+    if i == algorithm:
+        agent_id = rlalgorithms[i]
 
 
 pickle_in = open(
@@ -44,10 +49,10 @@ with open('deep_dialog/data/test_user_goals.pickle', 'wb') as test:
 with open('deep_dialog/data/training_user_goals.pickle', 'wb') as train:
     pickle.dump(training_dict, train, protocol=pickle.HIGHEST_PROTOCOL)
 
-training_sample_count = 25
+training_sample_count = 55
 turn_count = 0
 
-while training_sample_count <= 30:
+while training_sample_count <= 60:
     training_sample = training_dict[:training_sample_count]
 
     with open('deep_dialog/checkpoints/results.txt', 'a') as results:
@@ -61,6 +66,6 @@ while training_sample_count <= 30:
                     protocol=pickle.HIGHEST_PROTOCOL)
     print("training sample added :", len(training_sample))
 
-    os.system("python run_RL.py --agt 9 --usr 1 --max_turn 40 --movie_kb_path deep_dialog/data/movie_kb.1k.p --dqn_hidden_size 80 --experience_replay_pool_size 1000 --episodes 100 --simulation_epoch_size 20 --write_model_dir deep_dialog/checkpoints/rl_agent/ --run_mode 3 --act_level 0 --slot_err_prob 0.00 --intent_err_prob 0.00 --batch_size 16 --goal_file_path deep_dialog/data/training_sample.pickle --warm_start 1 --warm_start_epochs 120 --alpha {} --beta {} --test_path deep_dialog/data/test_user_goals.pickle".format(alpha, beta))
+    os.system("python run_RL.py --agt {} --usr 1 --max_turn 40 --movie_kb_path deep_dialog/data/movie_kb.1k.p --dqn_hidden_size 80 --experience_replay_pool_size 1000 --episodes 100 --simulation_epoch_size 20 --write_model_dir deep_dialog/checkpoints/rl_agent/ --run_mode 3 --act_level 0 --slot_err_prob 0.00 --intent_err_prob 0.00 --batch_size 16 --goal_file_path deep_dialog/data/training_sample.pickle --warm_start 1 --warm_start_epochs 120 --alpha {} --beta {} --test_path deep_dialog/data/test_user_goals.pickle".format(10, alpha, beta))
 
     training_sample_count += 5
