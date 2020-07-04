@@ -123,4 +123,4 @@ while training_sample_count <= 80:
                 os.system("python run.py --agt 9 --usr 1 --max_turn 40 --movie_kb_path deep_dialog/data/movie_kb.1k.p --dqn_hidden_size 80 --experience_replay_pool_size 1000 --episodes 100 --simulation_epoch_size 20 --write_model_dir deep_dialog/checkpoints/rl_agent/ --slot_err_prob 0.00 --intent_err_prob 0.00 --batch_size 16 --goal_file_path deep_dialog/data/outlier_user_goals.pickle --trained_model_path {} --run_mode 3".format(latest_file))
                 print(turn_count)
 
-        training_sample_count += 12
+        training_sample_count += 5
