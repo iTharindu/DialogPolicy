@@ -26,6 +26,6 @@
         "beta": [
             1
         ],
-        "method": "softmax"
+        "method": "naive"
     }
 }
