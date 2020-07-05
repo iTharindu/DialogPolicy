@@ -16,7 +16,7 @@ from deep_dialog import dialog_config
 
 def softmax(x, beta=1):
     """Compute softmax values for each sets of scores in x."""
-    return np.exp(x * beta) / np.sum(np.exp(x * beta), axis=0)
+    return np.exp(np.asarray(x) * beta) / np.sum(np.exp(np.asarray(x) * beta), axis=0)
 
 
 def probs_normalize(x, beta=1):

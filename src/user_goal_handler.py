@@ -83,7 +83,7 @@ while training_sample_count <= 80:
                         protocol=pickle.HIGHEST_PROTOCOL)
             print("training sample added :", len(training_sample))
 
-        os.system("python run.py --agt 9 --usr 1 --max_turn 40 --movie_kb_path deep_dialog/data/movie_kb.1k.p --dqn_hidden_size 80 --experience_replay_pool_size 1000 --episodes 150 --simulation_epoch_size 20 --write_model_dir deep_dialog/checkpoints/rl_agent/ --run_mode 3 --act_level 0 --slot_err_prob 0.00 --intent_err_prob 0.00 --batch_size 16 --goal_file_path deep_dialog/data/training_sample.pickle --warm_start 1 --warm_start_epochs 120")
+        os.system("python run.py --agt 9 --usr 1 --max_turn 40 --movie_kb_path deep_dialog/data/movie_kb.1k.p --dqn_hidden_size 80 --experience_replay_pool_size 1000 --episodes 200 --simulation_epoch_size 20 --write_model_dir deep_dialog/checkpoints/rl_agent/ --run_mode 3 --act_level 0 --slot_err_prob 0.00 --intent_err_prob 0.00 --batch_size 16 --goal_file_path deep_dialog/data/training_sample.pickle --warm_start 1 --warm_start_epochs 120")
         os.system("python draw_learning_curve.py --result_file deep_dialog/checkpoints/rl_agent/agt_9_performance_records.json --sample-rate {} --turn-count {}".format(training_sample_count, turn_count))
 
         # * means all if need specific format then *.csv
@@ -110,7 +110,7 @@ while training_sample_count <= 80:
                                 protocol=pickle.HIGHEST_PROTOCOL)
                     print("training sample added :", len(training_sample))
 
-                os.system("python run.py --agt 9 --usr 1 --max_turn 40 --movie_kb_path deep_dialog/data/movie_kb.1k.p --dqn_hidden_size 80 --experience_replay_pool_size 1000 --episodes 150 --simulation_epoch_size 20 --write_model_dir deep_dialog/checkpoints/rl_agent/ --run_mode 3 --act_level 0 --slot_err_prob 0.00 --intent_err_prob 0.00 --batch_size 16 --goal_file_path deep_dialog/data/training_sample.pickle --warm_start 1 --warm_start_epochs 120 --alpha {} --beta {}".format(alpha, beta))
+                os.system("python run.py --agt 9 --usr 1 --max_turn 40 --movie_kb_path deep_dialog/data/movie_kb.1k.p --dqn_hidden_size 80 --experience_replay_pool_size 1000 --episodes 200 --simulation_epoch_size 20 --write_model_dir deep_dialog/checkpoints/rl_agent/ --run_mode 3 --act_level 0 --slot_err_prob 0.00 --intent_err_prob 0.00 --batch_size 16 --goal_file_path deep_dialog/data/training_sample.pickle --warm_start 1 --warm_start_epochs 120 --alpha {} --beta {}".format(alpha, beta))
                 os.system("python draw_learning_curve.py --result_file deep_dialog/checkpoints/rl_agent/agt_9_performance_records.json --sample-rate {} --turn-count {}".format(
                     training_sample_count, turn_count))
 

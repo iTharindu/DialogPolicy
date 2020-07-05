@@ -11,7 +11,7 @@
         "update_step": 4,
         "exploration": "False",
         "prioratize_failed": "True",
-        "update_start": 60
+        "update_start": 120
     },
     "exploration_params": {
         "additive": "True",
@@ -24,8 +24,9 @@
             0.5
         ],
         "beta": [
-            1
+            10,
+            100
         ],
-        "method": "naive"
+        "method": "softmax"
     }
 }
