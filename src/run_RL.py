@@ -147,7 +147,7 @@ if __name__ == "__main__":
     print 'Dialog Parameters: '
     print json.dumps(params, indent=2)
 
-with open("config.json") as json_config_file:
+with open("config_rl.json") as json_config_file:
     config = json.load(json_config_file)
 
 selfplay_params = config["selfplay_params"]
@@ -243,6 +243,13 @@ elif agt == 9:
     agent = AgentDQN(movie_kb, act_set, slot_set, agent_params)
 elif agt == 10:
     agent = DQNAgent(movie_kb, act_set, slot_set, agent_params)
+elif agt == 11:
+    agent = DoubleAgent(movie_kb, act_set, slot_set, agent_params)
+elif agt == 12:
+    agent = AgentDuel(movie_kb, act_set, slot_set, agent_params)
+elif agt == 13:
+    agent = A2CAgent(movie_kb, act_set, slot_set, agent_params)
+
 
 ################################################################################
 #    Add your agent here
@@ -402,6 +409,8 @@ def simulation_epoch(simulation_epoch_size):
                 else:
                     print ("simulation episode %s: Fail" % (episode))
                 cumulative_turns += dialog_manager.state_tracker.turn_count
+        if agt == 13:
+            agent.add_to_memory()
 
     res['success_rate'] = float(successes)/simulation_epoch_size
     res['ave_reward'] = float(cumulative_reward)/simulation_epoch_size
@@ -423,6 +432,8 @@ def warm_start_simulation():
     warm_start_run_epochs = 0
     for episode in xrange(warm_start_epochs):
         dialog_manager.initialize_episode()
+        if agt == 13:
+            agent.empty_memory()
         episode_over = False
         while(not episode_over):
             episode_over, reward = dialog_manager.next_turn()
@@ -437,9 +448,11 @@ def warm_start_simulation():
                 cumulative_turns += dialog_manager.state_tracker.turn_count
 
         warm_start_run_epochs += 1
-
-        if len(agent.experience_replay_pool) >= agent.experience_replay_pool_size:
-            break
+        if agt == 13:
+            agent.add_to_memory()
+        else:
+            if len(agent.experience_replay_pool) >= agent.experience_replay_pool_size:
+                break
 
     agent.warm_start = 2
     res['success_rate'] = float(successes)/warm_start_run_epochs
@@ -447,8 +460,8 @@ def warm_start_simulation():
     res['ave_turns'] = float(cumulative_turns)/warm_start_run_epochs
     print ("Warm_Start %s epochs, success rate %s, ave reward %s, ave turns %s" % (
         episode+1, res['success_rate'], res['ave_reward'], res['ave_turns']))
-    print ("Current experience replay buffer size %s" %
-           (len(agent.experience_replay_pool)))
+    # print ("Current experience replay buffer size %s" %
+    #       (len(agent.experience_replay_pool)))
 
 
 def run_episodes(count, status):
@@ -460,7 +473,7 @@ def run_episodes(count, status):
     if params['trained_model_path'] != None:
         user_sim.phase = "testing"
 
-    if agt == 9 or agt == 10 and params['trained_model_path'] == None and warm_start == 1:
+    if agt == 9 or agt == 10 or agt == 11 or agt == 12 or agt == 13 and params['trained_model_path'] == None and warm_start == 1:
         print ('warm_start starting ...')
         warm_start_simulation()
         print ('warm_start finished, start RL training ...')
@@ -484,7 +497,7 @@ def run_episodes(count, status):
                 cumulative_turns += dialog_manager.state_tracker.turn_count
 
         # simulation
-        if agt == 9 or agt == 10 and params['trained_model_path'] == None:
+        if agt == 9 or agt == 10 or agt == 11 or agt == 12 or agt == 13 and params['trained_model_path'] == None:
             agent.predict_mode = True
             simulation_res = simulation_epoch(simulation_epoch_size)
 
@@ -509,7 +522,10 @@ def run_episodes(count, status):
                 best_res['epoch'] = episode
             if agt == 9:
                 agent.clone_dqn = copy.deepcopy(agent.dqn)
-            agent.train(batch_size, 1)
+            if agt == 13:
+                agent.learn()
+            else:
+                agent.train(batch_size, 1)
             agent.predict_mode = False
 
             print ("Simulation success rate %s, Ave reward %s, Ave turns %s, Best success rate %s" % (
@@ -542,45 +558,51 @@ def run_episodes(count, status):
                         store_reward = []
                         print(len(store_reward))
 
+            if ((episode + 1) % 10 == 0):
+                successes_test = 0
+                cumulative_reward_test = 0
+                cumulative_turns_test = 0
+                count_test = 100
+
+                user_sim.phase = "testing"
+                selfPlay.set_sample(test_user_goals)
+
+                for episode_test in xrange(100):
+                    print ("Episode: %s" % (episode_test))
+                    dialog_manager.initialize_episode()
+                    episode_over_test = False
+
+                    while(not episode_over_test):
+                        episode_over_test, reward = dialog_manager.next_turn()
+                        cumulative_reward_test += reward
+
+                        if episode_over_test:
+                            if reward > 0:
+                                print ("Successful Dialog!")
+                                successes_test += 1
+                            else:
+                                print ("Failed Dialog!")
+
+                            cumulative_turns_test += dialog_manager.state_tracker.turn_count
+
+                print("Success rate: %s / %s Avg reward: %.2f Avg turns: %.2f" % (successes_test,
+                                                                                  count_test, float(cumulative_reward_test)/count_test, float(cumulative_turns_test)/count_test))
+                with open('deep_dialog/checkpoints/test.txt', 'a') as results:
+                    results.write("%s\n" % (successes_test))
+                with open('deep_dialog/checkpoints/train.txt', 'a') as results:
+                    results.write("%s\n" % (best_res['success_rate']))
+
+            user_sim.phase = "training"
+            selfPlay.set_sample(goal_set['all'])
+
         print("Progress: %s / %s, Success rate: %s / %s Avg reward: %.2f Avg turns: %.2f" % (episode+1, count,
                                                                                              successes, episode+1, float(cumulative_reward)/(episode+1), float(cumulative_turns)/(episode+1)))
     print("Success rate: %s / %s Avg reward: %.2f Avg turns: %.2f" % (successes,
                                                                       count, float(cumulative_reward)/count, float(cumulative_turns)/count))
-    with open('deep_dialog/checkpoints/results.txt', 'a') as results:
-        results.write("Success rate: %s / %s Avg reward: %.2f Avg turns: %.2f  Best success: %.2f \n" %
-                      (successes, count, float(cumulative_reward)/count, float(cumulative_turns)/count, float(best_res['success_rate'])))
 
     status['successes'] += successes
     status['count'] += count
 
-    successes = 0
-    cumulative_reward = 0
-    cumulative_turns = 0
-    count = 100
-
-    user_sim.phase = "testing"
-    selfPlay.set_sample(test_user_goals)
-
-    for episode in xrange(100):
-        print ("Episode: %s" % (episode))
-        dialog_manager.initialize_episode()
-        episode_over = False
-
-        while(not episode_over):
-            episode_over, reward = dialog_manager.next_turn()
-            cumulative_reward += reward
-
-            if episode_over:
-                if reward > 0:
-                    print ("Successful Dialog!")
-                    successes += 1
-                else:
-                    print ("Failed Dialog!")
-
-                cumulative_turns += dialog_manager.state_tracker.turn_count
-
-    print("Success rate: %s / %s Avg reward: %.2f Avg turns: %.2f" % (successes,
-                                                                      count, float(cumulative_reward)/count, float(cumulative_turns)/count))
     with open('deep_dialog/checkpoints/results.txt', 'a') as results:
         results.write("Success rate: %s / %s Avg reward: %.2f Avg turns: %.2f  Best success: %.2f \n" %
                       (successes, count, float(cumulative_reward)/count, float(cumulative_turns)/count, float(best_res['success_rate'])))

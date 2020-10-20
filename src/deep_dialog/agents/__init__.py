@@ -3,7 +3,6 @@ from .agent_baselines import *
 from .agent_dqn import *
 from .dqn_agent import *
 from .replay_buffer import *
-from .dqn_agent import *
 from .double_agent import *
 from .duel_agent import *
 from .a2c_agent import *

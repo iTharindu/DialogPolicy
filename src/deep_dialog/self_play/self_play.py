@@ -51,6 +51,7 @@ class SelfPlay():
         self.sum_prob = 0
         self.list_slots = []
         self.list_probs = []
+        self.slot_domain_list = {}
 
         self.sample = sample_goals
         self.movie_kb = movie_kb
@@ -69,6 +70,7 @@ class SelfPlay():
         self.dict_slots_prob = {}
         self.inform_slots_prob = {}
         self.request_slots_prob = {}
+        self.slot_domain_list = {}
 
         self.count = 0
         self.slot_count = 0
@@ -109,11 +111,13 @@ class SelfPlay():
 
         for i in self.slots:
             self.dict_slots[i] = False
+            self.slot_domain_list[i] = []
 
         for i in self.movie_kb:
             for j in self.movie_kb[i]:
                 if j in self.dict_slots:
                     self.dict_slots[j] = True
+                    self.slot_domain_list[j].append(i)
 
         for i in self.slots:
             self.dict_values[i] = []
@@ -211,6 +215,8 @@ class SelfPlay():
             self.list_slots.append(i)
             self.list_probs.append(self.dict_slots_prob[i])
 
+        print(self.dict_slots_prob)
+
         # return self.dict_slots_prob
 
     def sample_goal_prob(self):
@@ -235,6 +241,25 @@ class SelfPlay():
 
         list_slots_sample = np.random.choice(
             self.list_slots, num_slots, replace=False, p=self.list_probs)
+
+        while True:
+            list_slots_sample = np.random.choice(
+                self.list_slots, num_slots, replace=False, p=self.list_probs)
+            list_slots_informable = []
+            for i in list_slots_sample:
+                if self.dict_slots[i]:
+                    list_slots_informable.append(i)
+            # print(list_slots_informable)
+            all_list = []
+            for i in list_slots_informable:
+                # print(self.slot_domain_list[i])
+                all_list.extend(self.slot_domain_list[i])
+            # print(all_list)
+            if len(all_list) > 0:
+                break
+
+        #number = max(set(all_list), key=all_list.count)
+        # print(number)
 
         for i in list_slots_sample:
             if random.random() < self.inform_slots_prob[i]:

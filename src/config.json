@@ -6,15 +6,15 @@
     "selfplay_params": {
         "epsilon_1": 0.001,
         "epsilon_2": 0.0001,
-        "epsilon_3": 0.0001,
+        "epsilon_3": 3,
         "updatable": "True",
         "update_step": 4,
         "exploration": "False",
-        "prioratize_failed": "True",
-        "update_start": 120
+        "prioratize_failed": "False",
+        "update_start": 60
     },
     "exploration_params": {
-        "additive": "True",
+        "additive": "False",
         "theta_1": 2,
         "theta_2": 2,
         "theta_3": 2
@@ -24,8 +24,7 @@
             0.5
         ],
         "beta": [
-            10,
-            100
+            10
         ],
         "method": "softmax"
     }

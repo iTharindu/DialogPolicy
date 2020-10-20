@@ -29,9 +29,9 @@ class Actor(nn.Module):
         super(Actor, self).__init__()
         self.state_size = state_size
         self.action_size = action_size
-        self.linear1 = nn.Linear(self.state_size, 128)
-        self.linear2 = nn.Linear(128, 256)
-        self.linear3 = nn.Linear(256, self.action_size)
+        self.linear1 = nn.Linear(self.state_size, 64)
+        self.linear2 = nn.Linear(64, 64)
+        self.linear3 = nn.Linear(64, self.action_size)
 
     def forward(self, state):
         output = F.relu(self.linear1(state))
@@ -46,9 +46,9 @@ class Critic(nn.Module):
         super(Critic, self).__init__()
         self.state_size = state_size
         self.action_size = action_size
-        self.linear1 = nn.Linear(self.state_size, 128)
-        self.linear2 = nn.Linear(128, 256)
-        self.linear3 = nn.Linear(256, 1)
+        self.linear1 = nn.Linear(self.state_size, 64)
+        self.linear2 = nn.Linear(64, 64)
+        self.linear3 = nn.Linear(64, 1)
 
     def forward(self, state):
         output = F.relu(self.linear1(state))
@@ -234,12 +234,11 @@ class A2CAgent(Agent):
             state = torch.from_numpy(
                 state).float().unsqueeze(0).to(self.device)
             self.actor.eval()
-            print(state)
             with torch.no_grad():
                 dist = self.actor(state)
                 #print('action', action)
             self.actor.train()
-            # self.critic.train()
+            self.critic.train()
 
             return dist.sample()
 

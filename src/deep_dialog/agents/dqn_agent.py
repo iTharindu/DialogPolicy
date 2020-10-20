@@ -50,7 +50,7 @@ class QNetwork(nn.Module):
 
 
 class DQNAgent(Agent):
-    def __init__(self, movie_dict=None, act_set=None, slot_set=None, params=None, seed=1234):
+    def __init__(self, movie_dict=None, act_set=None, slot_set=None, params=None, seed=1):
         self.movie_dict = movie_dict
         self.act_set = act_set
         self.slot_set = slot_set
