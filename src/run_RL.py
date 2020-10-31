@@ -34,7 +34,7 @@ import os
 import cPickle as pickle
 
 from deep_dialog.dialog_system import DialogManager, text_to_dict
-from deep_dialog.agents import AgentCmd, InformAgent, RequestAllAgent, RandomAgent, EchoAgent, RequestBasicsAgent, AgentDQN, DQNAgent, DoubleAgent, AgentDuel, NoisyNet, A2CAgent, ReplayBuffer
+from deep_dialog.agents import AgentCmd, InformAgent, RequestAllAgent, RandomAgent, EchoAgent, RequestBasicsAgent, AgentDQN, DQNAgent, DoubleAgent, AgentDuel, NoisyNet, A2CAgent, ReplayBuffer, PrioritizedDQNAgent
 from deep_dialog.usersims import RuleSimulator
 from deep_dialog.self_play import SelfPlay
 
@@ -249,6 +249,10 @@ elif agt == 12:
     agent = AgentDuel(movie_kb, act_set, slot_set, agent_params)
 elif agt == 13:
     agent = A2CAgent(movie_kb, act_set, slot_set, agent_params)
+elif agt == 14:
+    agent = PrioritizedDQNAgent(movie_kb, act_set, slot_set, agent_params)
+elif agt == 15:
+    agent = NoisyNet(movie_kb, act_set, slot_set, agent_params)
 
 
 ################################################################################
@@ -509,6 +513,8 @@ def run_episodes(count, status):
                 if simulation_res['success_rate'] >= success_rate_threshold:  # threshold = 0.30
                     if agt == 9:
                         agent.experience_replay_pool = []
+                    elif agt == 14:
+                        agent.reinitialize_memory()
                     else:
                         agent.memory = ReplayBuffer(43, 10000, 16, 1234)
                     simulation_epoch(simulation_epoch_size)
