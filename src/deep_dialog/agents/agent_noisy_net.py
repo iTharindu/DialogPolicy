@@ -25,53 +25,30 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
 class NoisyLinear(nn.Module):
-    """Noisy linear module for NoisyNet.
-
-    Attributes:
-        in_features (int): input size of linear module
-        out_features (int): output size of linear module
-        std_init (float): initial std value
-        weight_mu (nn.Parameter): mean value weight parameter
-        weight_sigma (nn.Parameter): std value weight parameter
-        bias_mu (nn.Parameter): mean value bias parameter
-        bias_sigma (nn.Parameter): std value bias parameter
-
-    """
-
-    def __init__(self, in_features, out_features, std_init=0.5):
-        """Initialization."""
+    def __init__(self, in_features, out_features, bias=True, epsilon = 0.4):
         super(NoisyLinear, self).__init__()
-
         self.in_features = in_features
         self.out_features = out_features
-        self.std_init = std_init
-
-        self.weight_mu = nn.Parameter(torch.Tensor(out_features, in_features))
-        self.weight_sigma = nn.Parameter(
-            torch.Tensor(out_features, in_features)
-        )
+        self.bias = bias
+        self.weight = torch.nn.Parameter(torch.Tensor(out_features, in_features))
         self.register_buffer(
             "weight_epsilon", torch.Tensor(out_features, in_features)
         )
-
-        self.bias_mu = nn.Parameter(torch.Tensor(out_features))
-        self.bias_sigma = nn.Parameter(torch.Tensor(out_features))
-        self.register_buffer("bias_epsilon", torch.Tensor(out_features))
-
+        self.sigma = torch.nn.Parameter(torch.Tensor(in_features))
+        if bias:
+            self.bias = torch.nn.Parameter(torch.Tensor(out_features))
+        else:
+            self.register_parameter('bias', None)
         self.reset_parameters()
         self.reset_noise()
-
+        self.reset_sigma(epsilon)
+        
     def reset_parameters(self):
-        """Reset trainable network parameters (factorized gaussian noise)."""
-        mu_range = 1 / math.sqrt(self.in_features)
-        self.weight_mu.data.uniform_(-mu_range, mu_range)
-        self.weight_sigma.data.fill_(
-            self.std_init / math.sqrt(self.in_features)
-        )
-        self.bias_mu.data.uniform_(-mu_range, mu_range)
-        self.bias_sigma.data.fill_(
-            self.std_init / math.sqrt(self.out_features)
-        )
+        torch.nn.init.kaiming_uniform_(self.weight, a=math.sqrt(5))
+        if self.bias is not None:
+            fan_in, _ = torch.nn.init._calculate_fan_in_and_fan_out(self.weight)
+            bound = 1 / math.sqrt(fan_in)
+            torch.nn.init.uniform_(self.bias, -bound, bound)
 
     def reset_noise(self):
         """Make new noise."""
@@ -80,18 +57,11 @@ class NoisyLinear(nn.Module):
 
         # outer product
         self.weight_epsilon.copy_(epsilon_out.ger(epsilon_in))
-        self.bias_epsilon.copy_(epsilon_out)
 
-    def forward(self, x):
-        """Forward method implementation.
 
-        We don't use separate statements on train / eval mode.
-        It doesn't show remarkable difference of performance.
-        """
-        return F.linear(
-            x,
-            self.weight_mu + self.weight_sigma * self.weight_epsilon,
-            self.bias_mu + self.bias_sigma * self.bias_epsilon,
+    def reset_sigma(self, epsilon):
+        self.sigma.data.fill_(
+            epsilon / math.sqrt(self.out_features)
         )
 
     @staticmethod
@@ -99,30 +69,43 @@ class NoisyLinear(nn.Module):
         """Set scale to make noise (factorized gaussian noise)."""
         x = torch.FloatTensor(np.random.normal(loc=0.0, scale=1.0, size=size))
 
-        return x.sign().mul(x.abs().sqrt())
+        return x.sign().mul(x.abs().sqrt())       
+ 
+    def forward(self, input):
+        y = input.shape
+        output = input.matmul(self.weight.t())
+        noise = self.sigma.matmul(self.weight_epsilon.t())
+        output = output + noise
+        if self.bias is not None:
+            output += self.bias
+        ret = output
+        return ret
 
 
 class QNetwork(nn.Module):
-    def __init__(self, in_dim, out_dim, seed):
+    def __init__(self, state_size, action_size, seed, fc1_unit=64, fc2_unit=64):
         """Initialization."""
         super(QNetwork, self).__init__()
 
-        self.feature = nn.Linear(in_dim, 64)
-        self.noisy_layer1 = NoisyLinear(64, 64)
-        self.noisy_layer2 = NoisyLinear(64, out_dim)
+        self.fc1 = nn.Linear(state_size, fc1_unit)
+        self.fc2 = nn.Linear(fc1_unit, fc2_unit)
+        self.noisy_layer = NoisyLinear(fc2_unit, action_size)
 
-    def forward(self, x):
-        """Forward method implementation."""
-        feature = F.relu(self.feature(x))
-        hidden = F.relu(self.noisy_layer1(feature))
-        out = self.noisy_layer2(hidden)
-
+    def forward(self, state):
+        """Build a network that maps state -> action values."""
+        #reset_noise()
+        x = F.relu(self.fc1(state))
+        x = F.relu(self.fc2(x))
+        out = self.noisy_layer.forward(x)
         return out
 
     def reset_noise(self):
         """Reset all noisy layers."""
-        self.noisy_layer1.reset_noise()
-        self.noisy_layer2.reset_noise()
+        self.noisy_layer.reset_noise()
+
+    def reset_sigma(self, epsilon):
+        """Reset all noisy layers."""
+        self.noisy_layer.reset_sigma(epsilon)
 
 
 class NoisyNet(Agent):
@@ -280,11 +263,8 @@ class NoisyNet(Agent):
         return self.final_representation
 
     def run_policy(self, state):
-        """ epsilon-greedy policy """
-
-        if random.random() < self.epsilon:
-            return random.randint(0, self.num_actions - 1)
-        else:
+            self.qnetwork_local.reset_noise()
+            self.qnetwork_local.reset_sigma(self.epsilon)
             if self.warm_start == 1:
                 if len(self.experience_replay_pool) > self.experience_replay_pool_size:
                     self.warm_start = 2

@@ -8,3 +8,5 @@ from .duel_agent import *
 from .a2c_agent import *
 from .agent_noisy_net import *
 from .replay_buffer import *
+from .prioritized_replay_buffer import *
+from .prioritized_experience_replay_dqn import *
